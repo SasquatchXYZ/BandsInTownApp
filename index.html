@@ -6,30 +6,64 @@
     <title>Bands In Town</title>
 
     <!-- Link to Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
 
 <!-- Artist Select Box -->
-<form id="artist-form">
+<!-- Image and text -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="assets/images/logo.svg" height="50px" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Bands In Town <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="wjs.html">Wall Street Journal</a>
+            <a class="nav-item nav-link" href="#">Pricing</a>
+            <a class="nav-item nav-link disabled" href="#">Disabled</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="card-body">
+        <form>
+            <div class="form-group">
+                <label for="artist-input">Choose Your Artist</label>
+                <input type="text" class="form-control" id="artist-input" placeholder="Enter Artist">
+            </div>
+            <button type="submit" class="btn btn-outline-danger" id="select-artist">Submit</button>
+        </form>
+    </div>
+    <br>
+    <!--    <form id="artist-form">
 
-    <!-- Label for Text Box -->
-    <label for="artist-input">Choose Your Artist</label>
+            &lt;!&ndash; Label for Text Box &ndash;&gt;
+            <label for="artist-input">Choose Your Artist</label>
 
-    <!-- Text Input Box -->
-    <input type="text" id="artist-input"><br>
+            &lt;!&ndash; Text Input Box &ndash;&gt;
+            <input type="text" id="artist-input"><br>
 
-    <!-- Submit Button -->
-    <input id="select-artist" type="submit" value="GO!">
-</form>
+            &lt;!&ndash; Submit Button &ndash;&gt;
+            <input id="select-artist" type="submit" value="GO!">
+        </form>-->
 
-<!-- Artist Information -->
-<div id="artist-div"></div>
+    <!-- Artist Information -->
+    <div class="card-columns" id="artist-div"></div>
+</div>
 
 
 <!--Link to jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--Link to Popper.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<!--Link to Bootstrap.js-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!--Link to JavaScript-->
 <script src="assets/javascript/app.js"></script>
 </body>
