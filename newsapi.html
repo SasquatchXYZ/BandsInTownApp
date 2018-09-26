@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Bands In Town</title>
+    <title>News API | Dalton Ricker</title>
 
     <!-- Link to Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -14,7 +14,8 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
-        <img src="assets/images/logo.svg" height="50px" class="d-inline-block align-top" alt="">
+        <!--<img src="assets/images/wsj.png" height="50px" class="d-inline-block align-top" alt="">-->
+        News API
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,40 +23,33 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Bands In Town <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="newsapi.html">News API</a>
-            <a class="nav-item nav-link" href="#">NYTimes</a>
-            <a class="nav-item nav-link" href="#">GIPHY</a>
+            <a class="nav-item nav-link" href="index.html">Bands In Town <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="#">News API</a>
+            <a class="nav-item nav-link" href="#">New York Times</a>
+            <a class="nav-item nav-link disabled" href="#">Disabled</a>
         </div>
     </div>
 </nav>
-
+<!-- Container -->
 <div class="container">
     <!-- Input Form -->
     <div class="card-body">
         <form>
             <div class="form-group">
-                <label for="artist-input">Choose Your Artist</label>
-                <input type="text" class="form-control" id="artist-input" placeholder="Enter Artist">
+                <label for="subject-input">Article Search by Category:</label>
+                <input type="text" class="form-control" id="subject-input"
+                       placeholder="business, entertainment, general, health, science, sports, technology...">
             </div>
-            <button type="submit" class="btn btn-outline-danger" id="select-artist">Submit</button>
+            <button type="submit" class="btn btn-outline-danger" id="search-articles">Submit</button>
         </form>
     </div>
     <br>
-    <!--    <form id="artist-form">
-
-            &lt;!&ndash; Label for Text Box &ndash;&gt;
-            <label for="artist-input">Choose Your Artist</label>
-
-            &lt;!&ndash; Text Input Box &ndash;&gt;
-            <input type="text" id="artist-input"><br>
-
-            &lt;!&ndash; Submit Button &ndash;&gt;
-            <input id="select-artist" type="submit" value="GO!">
-        </form>-->
-
-    <!-- Artist Results Information -->
-    <div class="card-columns" id="artist-div"></div>
+    <!-- Results Display -->
+    <div class="card" id="articles-card" style="display: none">
+        <div class="card-header">Article Results</div>
+        <div class="card-body" id="articles-div">
+        </div>
+    </div>
 </div>
 
 

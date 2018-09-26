@@ -51,4 +51,48 @@ $("#select-artist").on("click", function (event) {
     $("#artist-input").val("");
 });
 
-// JS for WSJ Search ===================================================================================================
+// JS for News API Search ==============================================================================================
+function searchNews(subject) {
+
+    let apiKey = '';
+    let queryURL = `https://newsapi.org/v2/sources?language=en&category=${subject}&apiKey=${apiKey}`;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        .then(function(response) {
+            console.log(response);
+
+            let articleSearch = response.sources;
+            for (var n = 0; n < articleSearch.length; n++) {
+
+                let article = response.sources[n];
+                let articleCardBody = $(`<div class='card-body'>
+                                    <h5 class="card-title">${n + 1}.) ${article.name}</h5>
+                                    <p class="card-text">${article.description}</p>
+                                    <p class='card-text'>
+                                        <a href="${article.url}" target="_blank">${article.name}</a>
+                                    </p>
+                                    </div>`);
+                $("#articles-div").append(articleCardBody);
+                $("#articles-card").show()
+
+            }
+
+        }).catch(console.log);
+}
+
+
+$("#search-articles").on("click", function (event) {
+    event.preventDefault();
+
+    $("#articles-div").empty();
+
+    var subject = $("#subject-input").val().trim();
+    console.log(subject);
+
+    searchNews(subject);
+
+    $("#subject-input").val("");
+});
