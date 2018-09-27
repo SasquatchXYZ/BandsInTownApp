@@ -19,7 +19,7 @@ function searchBandsInTown(artist) {
 
             let artistSearch = response;
 
-            let artistCard = $(`<div class='card p-3'>`);
+            let artistCard = $(`<div class='card'>`);
             let artistImage = $(`<img class='card-img-top' src=${artistSearch.thumb_url} alt=${artistSearch.name}>`);
             let artistCardBody = $(`<div class='card-body'>
                                     <h5 class="card-title">${artistSearch.name}</h5>
@@ -75,8 +75,8 @@ function searchNews(subject) {
                                         <a href="${article.url}" target="_blank">${article.name}</a>
                                     </p>
                                     </div>`);
-                $("#articles-div").append(articleCardBody);
                 $("#articles-card").show()
+                $("#news-articles-div").append(articleCardBody);
 
             }
 
@@ -90,11 +90,15 @@ $("#search-newsapi").on("click", function (event) {
     $("#news-articles-div").empty();
 
     var subject = $("#subject-input").val().trim();
-    console.log(subject);
+    if (subject === "") {
+    } else{
+        console.log(subject);
 
-    searchNews(subject);
+        searchNews(subject);
 
-    $("#subject-input").val("");
+        $("#subject-input").val("");
+    }
+
 });
 
 // JS for NYTimes Article Search =======================================================================================
@@ -216,12 +220,12 @@ function queryGiphy(topic) {
                                 style="height: ${giffs[m].images.fixed_height_still.height}px; width: ${giffs[m].images.fixed_height_still.width}px">`);
 
                 let gifImage = $(`<img class='card-img'>`)
-                    .attr("src", giffs[m].images.fixed_height.url)
+                    .attr("src", giffs[m].images.fixed_height_still.url)
                     .attr("height", giffs[m].images.fixed_height_still.height + "px")
                     .attr("width", giffs[m].images.fixed_height_still.width + "px")
                     .attr("data-still", giffs[m].images.fixed_height_still.url)
                     .attr("data-animate", giffs[m].images.fixed_height.url)
-                    .attr("data-state", "animate")
+                    .attr("data-state", 'still')
                     .attr("id", 'gif');
 
                 gifCard.append(gifImage);
@@ -251,7 +255,7 @@ function queryGiphy(topic) {
 
 $(document).on("click", "#topic-btn", function() {
     offsetNum = 0;
-    $("#gif_container").empty();
+    $("#gif_container, #more-button").empty();
 
     let chosenTopic = $(this).attr('data-topic');
     queryGiphy(chosenTopic);
