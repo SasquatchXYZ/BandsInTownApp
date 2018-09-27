@@ -30,25 +30,37 @@
         </div>
     </div>
 </nav>
+<br>
 <!-- Container -->
-<div class="container">
+<div class="container-fluid">
     <!-- Input Form -->
-    <div class="card-body">
-        <form>
-            <div class="form-group">
-                <label for="subject-input">Article Search by Category:</label>
-                <input type="text" class="form-control" id="subject-input"
-                       placeholder="business, entertainment, general, health, science, sports, technology...">
+    <div class="row">
+        <div class="col-md-8" id="button_container"></div>
+        <div class="col-md-4">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="giphy-input">GIPHY Search:</label>
+                        <input type="text" class="form-control" id="giphy-input"
+                               placeholder="The Possibilities are Endless...">
+                    </div>
+                    <button type="submit" class="btn btn-outline-danger" id="add-gif-btn">Add!</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-outline-danger" id="search-articles">Submit</button>
-        </form>
-    </div>
-    <br>
-    <!-- Results Display -->
-    <div class="card" id="articles-card" style="display: none">
-        <div class="card-header">Article Results</div>
-        <div class="card-body" id="articles-div">
         </div>
+
+    </div>
+</div>
+<br>
+<div class="container-fluid">
+    <!-- Results Display -->
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card-columns" id="gif_container"></div>
+        </div>
+        <div class="col-md-3" id="favorites_container"></div>
+    </div>
+    <div class="row justify-content-center" id="more-button">
     </div>
 </div>
 

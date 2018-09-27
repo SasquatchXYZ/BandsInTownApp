@@ -179,6 +179,118 @@ $("#search-nytimes").on("click", function (event) {
 
 $("#clear-nytimes").on("click", clearNYTResults);
 
-
 // JS for GIPHY API Search =============================================================================================
+let topicBtns = ["dog", "cat", "rabbit", "hamster", "skunk", "goldfish", "bird", "ferret", "turtle",
+    "sugar glider", "chinchilla", "hedgehog", "hermit crab", "gerbil", "pygmy goat", "chicken", "capybara",
+    "teacup pig", "serval", "ostrich", "salamander", "frog"];
 
+let offsetNum = 0;
+
+function renderButtons() {
+    $("#button_container").empty()
+        .html(
+            topicBtns.map(function (topic) {
+                return `<button type='button' class='btn btn-outline-success' id='topic-btn' 
+                            data-topic=${topic} style="margin: 2px">${topic}</button>`
+            })
+                .join(``)
+        )
+}
+
+function queryGiphy(topic) {
+
+    let apiKey = '';
+    let queryOffset = `&offset=${offsetNum}`;
+    let queryURL = `https://api.giphy.com/v1/gifs/search?q=${topic}&api_key=${apiKey}&limit=10${queryOffset}`;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        .then(function(response) {
+            let giffs = response.data;
+            console.log(response.data);
+
+            for (var m = 0; m < giffs.length; m++) {
+                let gifCard = $(`<div class='card bg-dark text-white' id="gif-card"
+                                style="height: ${giffs[m].images.fixed_height_still.height}px; width: ${giffs[m].images.fixed_height_still.width}px">`);
+
+                let gifImage = $(`<img class='card-img'>`)
+                    .attr("src", giffs[m].images.fixed_height.url)
+                    .attr("height", giffs[m].images.fixed_height_still.height + "px")
+                    .attr("width", giffs[m].images.fixed_height_still.width + "px")
+                    .attr("data-still", giffs[m].images.fixed_height_still.url)
+                    .attr("data-animate", giffs[m].images.fixed_height.url)
+                    .attr("data-state", "animate")
+                    .attr("id", 'gif');
+
+                gifCard.append(gifImage);
+
+                let rating = giffs[m].rating.toUpperCase();
+
+                let p = $(`<div class="card-img-overlay"><p class='card-title'>Rating: ${rating}</p></div>`);
+
+                let favBtn = $(`<button type='button' class='btn btn-outline-light btn-sm'>&#x2661</button>`)
+                    .attr("data-fav", giffs[m].images.fixed_width.url)
+                    .attr("data-fav-full", giffs[m].images.original.url)
+                    .attr("data-object", giffs[m]);
+
+                p.append(favBtn);
+                gifCard.append(p);
+
+                $("#gif_container").append(gifCard);
+            }
+
+        }).catch(console.log);
+
+    $("#more-button").append($(`<button type='button' class='btn btn-warning btn-lg' id='show-more' 
+                                data-topic=${topic} style="margin: 10px">Show More</button>`));
+    offsetNum+=10;
+
+}
+
+$(document).on("click", "#topic-btn", function() {
+    offsetNum = 0;
+    $("#gif_container").empty();
+
+    let chosenTopic = $(this).attr('data-topic');
+    queryGiphy(chosenTopic);
+
+})
+    .on("mouseover", ".card-img-overlay", function() {
+        let testImage = $(this).siblings("img");
+        console.log(testImage);
+        const state = testImage.attr("data-state");
+
+        if (state === 'animate') {
+            const url = testImage.attr("data-still");
+            testImage.attr("data-state", 'still');
+            testImage.attr("src", url);
+        } else {
+            const url = testImage.attr("data-animate");
+            testImage.attr("data-state", 'animate');
+            testImage.attr("src", url);
+        }
+    })
+    .on("click", "#show-more", function() {
+        var chosenTopic = $(this).attr("data-topic");
+        this.remove();
+        queryGiphy(chosenTopic);
+    })
+
+$("#button_container").ready(function () {
+
+    $("#add-gif-btn").on("click", function(event) {
+        event.preventDefault();
+
+        const newTopic = $("#giphy-input").val().trim();
+        console.log(newTopic);
+        if (newTopic === "") {
+        } else {
+            topicBtns.push(newTopic);
+            $("#giphy-input").val("")
+        }
+        renderButtons();
+    });
+    renderButtons();
+});
