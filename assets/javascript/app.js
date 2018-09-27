@@ -14,7 +14,7 @@ function searchBandsInTown(artist) {
         url: queryURL,
         method: "GET"
     })
-        .then(function(response) {
+        .then(function (response) {
             console.log(response);
 
             let artistSearch = response;
@@ -61,7 +61,7 @@ function searchNews(subject) {
         url: queryURL,
         method: "GET"
     })
-        .then(function(response) {
+        .then(function (response) {
             console.log(response);
 
             let articleSearch = response.sources;
@@ -84,10 +84,10 @@ function searchNews(subject) {
 }
 
 
-$("#search-articles").on("click", function (event) {
+$("#search-newsapi").on("click", function (event) {
     event.preventDefault();
 
-    $("#articles-div").empty();
+    $("#news-articles-div").empty();
 
     var subject = $("#subject-input").val().trim();
     console.log(subject);
@@ -98,6 +98,87 @@ $("#search-articles").on("click", function (event) {
 });
 
 // JS for NYTimes Article Search =======================================================================================
+function makeNYTQueryURL() {
+
+    let queryURL = "https://api.nytimes.com/svc/search/vs/articlesearch.json?";
+    let queryOptions = {'api-key': ""};
+
+    queryOptions.q = $("#search-term-nytimes").val().trim();
+
+    let start_year = $("#start-year-nytimes").val().trim();
+    queryOptions.begin_date = moment(start_year).format("YYYYMMDD");
+
+    let end_year = $("#end-year-nytimes").val().trim();
+    queryOptions.end_date = moment(end_year).format("YYYYMMDD");
+    console.log(queryOptions);
+
+    console.log(queryURL + $.param(queryOptions));
+
+    return queryURL + $.param(queryOptions);
+}
+
+function displayNYTResults(NYTResponse) {
+    console.log(NYTResponse);
+
+    let numArticles = $("#record-num-nytimes").val();
+
+    for (var h = 0; h < numArticles; h++) {
+        let article = NYTResponse.response.docs[h];
+
+        let articleDisplayNumber = h + 1;
+
+        let articleCardBody = $(`<div class='card-body'>`);
+
+        let articleHeadline = article.headline;
+        if (articleHeadline && articleHeadline.main) {
+            articleCardBody.append($(`<h5 class='card-title'>${articleDisplayNumber}.) ${articleHeadline.main}</h5>`))
+        }
+
+        let articleByline = article.byline;
+        if (articleByline && articleByline.original) {
+            articleCardBody.append($(`<p class='card-text'>${articleByline.original}</p>`))
+        }
+
+        let articleSection = article.section_name;
+        if (articleSection) {
+            articleCardBody.append($(`<p class='card-text'>${articleSection}</p>`))
+        }
+
+        let articleDate = moment(article.pub_date).format("MM-DD-YYYY");
+        if (articleDate) {
+            articleCardBody.append($(`<p class='card-text'><small class='text-muted'>${articleDate}</small></p>`))
+        }
+
+        articleCardBody.append($(`<a href='${article.web - url}' target='_blank' class='card-link'>Article Link</a>`))
+
+        $("#nytimes-articles-div").append(articleCardBody);
+        $("#nytimes-articles-card").show()
+
+    }
+}
+
+function clearNYTResults() {
+    $("#nytimes-articles-div").empty();
+    $("#nytimes-articles-card").hide();
+}
+
+$("#search-nytimes").on("click", function (event) {
+    event.preventDefault();
+
+    clearNYTResults();
+
+    var queryURL = makeNYTQueryURL();
+    console.log(queryURL);
+
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(displayNYTResults).catch(console.log);
+
+});
+
+$("#clear-nytimes").on("click", clearNYTResults);
 
 
 // JS for GIPHY API Search =============================================================================================
+
