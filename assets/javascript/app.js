@@ -105,7 +105,7 @@ $("#search-newsapi").on("click", function (event) {
 function makeNYTQueryURL() {
 
     let queryURL = "https://api.nytimes.com/svc/search/vs/articlesearch.json?";
-    let queryOptions = {'api-key': "1ec31beb44ea4bb8bfa0da466d0ac6e1"};
+    let queryOptions = {'api-key': ""};
 
     queryOptions.q = $("#search-term-nytimes").val().trim();
 
